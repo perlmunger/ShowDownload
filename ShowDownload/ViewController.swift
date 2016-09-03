@@ -16,8 +16,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         let url = URL(string: "https://bitcoin.org/bitcoin.pdf")
-        
-        let task = URLSession.shared.downloadTask(with: url!) { (localUrl, response, error) in
+        var request = URLRequest(url: url!)
+        request.addValue("Bob", forHTTPHeaderField: "Bob-Header")
+
+        let task = URLSession.shared.downloadTask(with: request) { (localUrl, response, error) in
             // Have to copy the downloaded file somewhere else or it will get purged
             let filename = "outputfilename.pdf"
             let outputUrl = FileManager.default.documentsDirectoryURL.appendingPathComponent(filename)
